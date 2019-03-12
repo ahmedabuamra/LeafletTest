@@ -1,13 +1,20 @@
 // load the map
 var mymap = L.map('mapid').setView([51.505, -0.09], 13);
 
+// keep device location in this variable
+var devLocation = null;
+
 // now add the click event detector to the map
 mymap.on('click', onMapClick);
 
+
+
 // stores device location
-var devLocation = null;
 this.getLocation();
-console.log(devLocation);
+
+// detect movement and store new location
+this.trackLocation();
+
 
 
 //load the tiles
@@ -42,35 +49,46 @@ function onMapClick(e) {
 
 
 
-
+////////////////////////////////////////////////////////////////////////////////////
 function getLocation() {
     // getPosition is the function that should be called once the position has been found
     return navigator.geolocation.getCurrentPosition(getPosition);
 }
-
-
-
 function getPosition(position) {
     // the system automatically gives you the position variable, and you can
     // get the coordinates lat and lng from there and
     // then modify a DIV to show the results to the user
     devLocation = position.coords;
-    console.log("Position", position.coords);
+    console.log("Initial Position", position.coords);
 }
+////////////////////////////////////////////////////////////////////////////////////
 
 
+////////////////////////////////////////////////////////////////////////////////////
+function trackLocation() {
+    if (navigator.geolocation) {
+        // showPosition is the method called automatically when the position changes
+        navigator.geolocation.watchPosition(showPosition);
+    }
+}
+function showPosition(position) {
+    // use the position variable to get the actual coordinates
+    devLocation = position.coords;
+    console.log("Moved to", position);
+}
+////////////////////////////////////////////////////////////////////////////////////
 
 
 
 function calculateDistance(lat1, lon1, lat2, lon2, unit) {
-    // first convert all the degree values into radians
-    // 1 radian is the angle created in a circle when the arc is equal length to the radius
+    //Convert lats to radian
     var radlat1 = Math.PI * lat1 / 180
     var radlat2 = Math.PI * lat2 / 180
 
     // find the difference in longitude and convert to radians
     var theta = lon1 - lon2
     var radtheta = Math.PI * theta / 180
+
     // then calculate the distance
     var subAngle = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
     subAngle = Math.acos(subAngle) // this is a value in radians so need to convert to km
@@ -87,62 +105,31 @@ function calculateDistance(lat1, lon1, lat2, lon2, unit) {
 
 
 
+////////////////////////////////////////////////////////////////////////////////////
+// create a GeoJSON Feature
+var geojsonFeature = {
+    "type": "Feature",
+    "properties": {
+        "name": "London",
+        "popupContent": "This is where UCL is based."
+    },
 
+    "geometry": {
+        "type": "Point",
+        "coordinates": [-0.133480, 51.524287]
+    }
+};
 
+// create a custom Marker icon
+var testMarkerPink = L.AwesomeMarkers.icon({
+    icon: 'play',
+    markerColor: 'pink'
+});
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-///////////////////////////////////////////////////////////////////////////
-// // create a GeoJSON Feature
-// var geojsonFeature = {
-//     "type": "Feature",
-//     "properties": {
-//         "name": "London",
-//         "popupContent": "This is where UCL is based."
-//     },
-
-//     "geometry": {
-//         "type": "Point",
-//         "coordinates": [-0.133480, 51.524287]
-//     }
-// };
-
-// // create a custom Marker icon
-// var testMarkerPink = L.AwesomeMarkers.icon({
-//     icon: 'play',
-//     markerColor: 'pink'
-// });
-
-// // and add it on the map
-// L.geoJSON(geojsonFeature, {
-//     pointToLayer: function (feature, latlng) {
-//         return L.marker(latlng, { icon: testMarkerPink });
-//     }
-// }).addTo(mymap).bindPopup("<b>" + geojsonFeature.properties.name + "" + geojsonFeature.properties.popupContent + "<b>");
-//////////////////////////////////////////////////////////////////////////////
+// and add it on the map
+L.geoJSON(geojsonFeature, {
+    pointToLayer: function (feature, latlng) {
+        return L.marker(latlng, { icon: testMarkerPink });
+    }
+}).addTo(mymap).bindPopup("<b>" + geojsonFeature.properties.name + "" + geojsonFeature.properties.popupContent + "<b>");
+////////////////////////////////////////////////////////////////////////////////////
