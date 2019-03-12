@@ -1,7 +1,6 @@
 // load the map
 var mymap = L.map('mapid').setView([51.505, -0.09], 13);
 
-console.log(L);
 
 //load the tiles
 L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=pk.eyJ1IjoibWFwYm94IiwiYSI6ImNpejY4NXVycTA2emYycXBndHRqcmZ3N3gifQ.rJcFIG214AriISLbB6B5aw', {
@@ -13,11 +12,11 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=p
 }).addTo(mymap);
 
 
-// create a custom popup
-var popup = L.popup();
-
 //create an event detector to wait for the user's click event and then use the popup to show them where they clicked
 function onMapClick(e) {
+    // create a custom popup
+    var popup = L.popup();
+
     popup.setLatLng(e.latlng)
         .setContent("You clicked the map at " + e.latlng.toString())
         .openOn(mymap);
@@ -28,6 +27,22 @@ mymap.on('click', onMapClick);
 
 
 
+
+function getLocation() {
+    // getPosition is the function that should be called once the position has been found
+    navigator.geolocation.getCurrentPosition(getPosition);
+}
+
+
+this.getLocation();
+
+
+function getPosition(position) {
+    // the system automatically gives you the position variable, and you can
+    // get the coordinates lat and lng from there and
+    // then modify a DIV to show the results to the user
+    console.log("Position", position.coords);
+}
 
 
 
