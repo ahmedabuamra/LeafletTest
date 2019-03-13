@@ -1,0 +1,5 @@
+<?xml version='1.0' encoding='utf-8'?>
+<port>
+<node-port-http>30272</node-port-http>
+<node-port-https>31072</node-port-https>
+</port>

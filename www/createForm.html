@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title> Simple Form Creation Example </title>
+	<script src="uploadData.js"></script>
+
+</head>
+<body>
+	<h1> This is a simple form </h1>
+	<div>
+		<label for="name">Name</label><input type="text" size="25" id="name"/><br />
+		<label for="surname">Surname</label><input type="text" size="25" id="surname"/><br />
+		<label for="moduleTitle">Module Title</label><input type="text" size="25" id="moduleTitle"/><br />
+
+		<p> Would you like to have your lectures in the morning or the afternoon? </p>
+		Morning: <input type="radio" name="amorpm" id="morning" /><br />
+		Afternoon: <input type="radio" name="amorpm" id="afternoon" /><br />
+
+		<p> Which Apple products do you own? </p>
+		iPhone: <input type="checkbox" name="appleprod" id=check1 value="iPhone" checked="yes" /><br />
+		iPad: <input type="checkbox" name="appleprod" id=check2 value="iPad" /><br />
+		iPod: <input type="checkbox" name="appleprod" id=check3 value="iPod" /><br />
+		iMac: <input type="checkbox" name="appleprod" id=check4 value="iMac" /><br />
+		MacBook: <input type="checkbox" name="appleprod" id=check5 value="MacBook" /><br />
+
+		<p> What is your first language? </p>
+		<select name="languageselectbox" id="languageselectbox">
+			<option>English</option>
+			<option>Arabic</option>
+			<option>French</option>
+			<option>Spanish</option>
+			<option>Italian</option>
+			<option>Other</option>
+		</select>
+		<br />
+	</div>
+
+	<button id="startUpload" onclick="startDataUpload()"> Start Data Upload</button>
+	<div id="dataUploadResult">The result of the upload goes here</div>
+
+	
+</body>
+</html>
