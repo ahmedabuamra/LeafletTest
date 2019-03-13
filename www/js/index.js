@@ -35,7 +35,7 @@ function onMapClick(e) {
     var popup = L.popup();
 
     popup.setLatLng(e.latlng)
-        .setContent("You clicked the map at " + e.latlng.toString())
+        .setContent('<iframe style="width: 400px; height: 500px;" src="./createForm.html"></iframe>')
         .openOn(mymap);
 
 
