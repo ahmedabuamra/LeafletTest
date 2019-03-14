@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title>  </title>
+	<script src="js/uploadData.js"></script>
+    <script src="js/index.js"></script>
+</head>
+<body>
+	<h1> This is a simple form </h1>
+	<div>
+		<label for="question_title">Question Title</label><input type="text" size="25" id="question_title"/><br />
+		<label for="question_text">Question Text</label><input type="text" size="40" id="question_text"/><br />
+
+
+        <label for="choice1_inp">Choice 1</label><input type="text" size="25" id="choice1_inp"/><br />
+        <label for="choice2_inp">Choice 2</label><input type="text" size="25" id="choice2_inp"/><br />
+        <label for="choice3_inp">Choice 3</label><input type="text" size="25" id="choice3_inp"/><br />
+        <label for="choice4_inp">Choice 4</label><input type="text" size="25" id="choice4_inp"/><br />
+
+        <br />
+		<p> Select the correct choice</p>
+		Choice 1: <input type="radio" name="amorpm" id="choice1" /><br />
+		Choice 2: <input type="radio" name="amorpm" id="choice2" /><br />
+		Choice 3: <input type="radio" name="amorpm" id="choice3" /><br />
+		Choice 4: <input type="radio" name="amorpm" id="choice4" /><br />
+
+	</div>
+
+	<button id="startUpload" onclick="startDataUpload()"> Submit Question </button>
+	<div id="dataUploadResult">The result of the upload goes here</div>
+
+
+    <input type="hidden" name="pointLat" id="pointLat" />
+    <input type="hidden" name="pointLng" id="pointLng" />
+
+    <input type="hidden" name="devLat" id="devLat" />
+    <input type="hidden" name="devLng" id="devLng" />
+	
+</body>
+</html>

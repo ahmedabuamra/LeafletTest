@@ -33,10 +33,16 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=p
 function onMapClick(e) {
     // create a custom popup
     var popup = L.popup();
-
+    document.getElementById('devLat').value = devLocation.latitude;
+    document.getElementById('devLng').value = devLocation.langitude;
+    document.getElementById('pointLat').value = e.latlng.lat;
+    document.getElementById('pointLng').value = e.latlng.lng;
+    // console.log(document.getElementById('pointLat'));
     popup.setLatLng(e.latlng)
-        .setContent('<iframe style="width: 400px; height: 500px;" src="./createForm.html"></iframe>')
+        .setContent('<iframe style="width: 400px; height: 500px;" src="./popupForm.html"></iframe>')
         .openOn(mymap);
+
+
 
 
     if(devLocation){

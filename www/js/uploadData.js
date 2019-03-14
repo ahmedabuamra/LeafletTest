@@ -1,12 +1,11 @@
 // uploading the answers
 function startDataUpload () {
 	//extract form values (response values)
-	var name = document.getElementById("name").value;
-	var surname = document.getElementById("surname").value;
-	var moduleTitle = document.getElementById("moduleTitle").value;
-	var postString = "name="+name +"&surname="+surname+"&moduleTitle="+moduleTitle;
+	var name = document.getElementById("question_title").value;
+	var surname = document.getElementById("question_text").value;
+	var postString = "name="+name +"&surname="+surname+"&&"+document.getElementById("devLat").value;
 	alert (postString);
-	processData(postString);
+	//processData(postString);
 }
 
 // global variable to hold the request
