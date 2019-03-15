@@ -3,9 +3,19 @@ function startDataUpload () {
 	//extract form values (response values)
 	var name = document.getElementById("question_title").value;
 	var surname = document.getElementById("question_text").value;
-	var postString = "name="+name +"&surname="+surname+"&&"+document.getElementById("devLat").value;
+
+	var devLat = sessionStorage.getItem("devLat");
+	var devLng = sessionStorage.getItem("devLng");
+	var pointLat = sessionStorage.getItem("devLat");
+	var pointLng = sessionStorage.getItem("pointLng");
+	
+
+	console.log("DEV", devLat + " " + devLng);
+	console.log("PNT", pointLat + " " + pointLng);
+	
+	var postString = "name="+name +"&surname="+surname;
 	alert (postString);
-	//processData(postString);
+	//processData(postString); //uncomment this!
 }
 
 // global variable to hold the request

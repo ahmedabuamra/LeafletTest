@@ -31,23 +31,27 @@ L.tileLayer('https://api.tiles.mapbox.com/v4/{id}/{z}/{x}/{y}.png?access_token=p
 
 //create an event detector to wait for the user's click event and then use the popup to show them where they clicked
 function onMapClick(e) {
-    // create a custom popup
-    var popup = L.popup();
-    document.getElementById('devLat').value = devLocation.latitude;
-    document.getElementById('devLng').value = devLocation.langitude;
-    document.getElementById('pointLat').value = e.latlng.lat;
-    document.getElementById('pointLng').value = e.latlng.lng;
-    // console.log(document.getElementById('pointLat'));
-    popup.setLatLng(e.latlng)
-        .setContent('<iframe style="width: 400px; height: 500px;" src="./popupForm.html"></iframe>')
-        .openOn(mymap);
 
 
+    if (e.latlng && devLocation) {
+        sessionStorage.setItem("devLat", devLocation.latitude);
+        sessionStorage.setItem("devLng", devLocation.longitude);
+        sessionStorage.setItem("pointLat", e.latlng.lat);
+        sessionStorage.setItem("pointLng", e.latlng.lng);
 
-
-    if(devLocation){
         var d = calculateDistance(e.latlng.lat, e.latlng.lng, devLocation.latitude, devLocation.longitude, "K");
         console.log("Distance from you: " + d + "KM")
+
+        // create a custom popup
+        var popup = L.popup();
+
+        // console.log(document.getElementById('pointLat'));
+        popup.setLatLng(e.latlng)
+            .setContent('<iframe style="width: 400px; height: 500px;" src="./popupForm.html"></iframe>')
+            .openOn(mymap);
+
+    }else{
+        alert("Can't get your location!");
     }
 }
 
@@ -64,6 +68,7 @@ function getPosition(position) {
     // the system automatically gives you the position variable, and you can
     // get the coordinates lat and lng from there and
     // then modify a DIV to show the results to the user
+    console.log(position);
     devLocation = position.coords;
     console.log("Initial Position", position.coords);
 }
@@ -99,7 +104,7 @@ function calculateDistance(lat1, lon1, lat2, lon2, unit) {
     var subAngle = Math.sin(radlat1) * Math.sin(radlat2) + Math.cos(radlat1) * Math.cos(radlat2) * Math.cos(radtheta);
     subAngle = Math.acos(subAngle) // this is a value in radians so need to convert to km
     subAngle = subAngle * 180 / Math.PI // distance * 2 * pi /360 OR distance * pi/180
-    
+
     var dist = (subAngle / 360) * 2 * Math.PI * 3956; // angle/360 * 2 * pi * radius – calculate arc length
     if (unit == "K") { dist = dist * 1.609344 }
     if (unit == "N") { dist = dist * 0.8684 }
