@@ -1,5 +1,6 @@
 // load the map
 var mymap = L.map('mapid').setView([51.505, -0.09], 13);
+var firstLoad = true;
 
 // keep device location in this variable
 var devLocation = null;
@@ -7,10 +8,6 @@ var devLocation = null;
 // now add the click event detector to the map
 mymap.on('click', onMapClick);
 
-
-
-// stores device location
-this.getLocation();
 
 // detect movement and store new location
 this.trackLocation();
@@ -45,34 +42,16 @@ function onMapClick(e) {
         // create a custom popup
         var popup = L.popup();
 
-        // console.log(document.getElementById('pointLat'));
+
+        // https://stackoverflow.com/questions/43089768/how-to-import-html-text-in-a-leaflet-popup
         popup.setLatLng(e.latlng)
-            .setContent('<iframe style="width: 400px; height: 500px;" src="./popupForm.html"></iframe>')
+            .setContent('<iframe style="width: 600px; height: 500px;" src="./popupForm.html"></iframe>')
             .openOn(mymap);
 
-    }else{
+    } else {
         alert("Can't get your location!");
     }
 }
-
-
-
-
-
-////////////////////////////////////////////////////////////////////////////////////
-function getLocation() {
-    // getPosition is the function that should be called once the position has been found
-    return navigator.geolocation.getCurrentPosition(getPosition);
-}
-function getPosition(position) {
-    // the system automatically gives you the position variable, and you can
-    // get the coordinates lat and lng from there and
-    // then modify a DIV to show the results to the user
-    console.log(position);
-    devLocation = position.coords;
-    console.log("Initial Position", position.coords);
-}
-////////////////////////////////////////////////////////////////////////////////////
 
 
 ////////////////////////////////////////////////////////////////////////////////////
@@ -85,6 +64,13 @@ function trackLocation() {
 function showPosition(position) {
     // use the position variable to get the actual coordinates
     devLocation = position.coords;
+
+    // Zoom into user location
+    // firstLoad variable is a flag to change the map centre 
+    if(firstLoad){
+        firstLoad = false;
+        mymap.panTo(new L.LatLng(devLocation.latitude, devLocation.longitude));
+    }
     console.log("Moved to", position);
 }
 ////////////////////////////////////////////////////////////////////////////////////
